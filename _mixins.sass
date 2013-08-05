@@ -32,26 +32,15 @@ $placeholderText: $grayLight
   color: transparent
 
 // Clearfix
-// --------
-// For clearing floats like a boss h5bp.com/q
 @mixin clearfix
   *zoom: 1
   &:before,
   &:after
     display: table
     content: "" 
-    // Fixes Opera/contenteditable bug:
-    // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
     line-height: 0
   &:after
     clear: both
-
-// Navbar vertical align
-// -------------------------
-// Vertically center elements in the navbar.
-// Example: an element has a height of 30px, so write out `.navbarVerticalAlign(30px);` to calculate the appropriate top margin.
-@mixin navbarVerticalAlign($elementHeight)
-  margin-top: ($navbarHeight - $elementHeight) / 2
 
 @mixin border-left-radius($r: 3px)
   -webkit-border-radius: $r 0 0 $r
