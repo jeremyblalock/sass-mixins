@@ -42,66 +42,32 @@ $placeholderText: $grayLight
   &:after
     clear: both
 
-@mixin border-left-radius($r: 3px)
-  -webkit-border-radius: $r 0 0 $r
-  -moz-border-radius: $r 0 0 $r
-  -o-border-radius: $r 0 0 $r
-  border-radius: $r 0 0 $r
-
-@mixin border-right-radius($r: 3px)
-  -webkit-border-radius: 0 $r $r 0
-  -moz-border-radius: 0 $r $r 0
-  -o-border-radius: 0 $r $r 0
-  border-radius: 0 $r $r 0
-
-@mixin border-top-radius($r: 3px)
-  -webkit-border-radius: $r $r 0 0
-  -moz-border-radius: $r $r 0 0
-  -o-border-radius: $r $r 0 0
-  border-radius: $r $r 0 0
-
-@mixin border-bottom-radius($r: 3px)
-  -webkit-border-radius: 0 0 $r $r
-  -moz-border-radius: 0 0 $r $r
-  -o-border-radius: 0 0 $r $r
-  border-radius: 0 0 $r $r
-
-@mixin border-radius($r: 3px)
+@mixin border-radius-base($r)
   -webkit-border-radius: $r
   -moz-border-radius: $r
   -o-border-radius: $r
   border-radius: $r
 
-@mixin rotate($angle)
-  -webkit-transform: rotate($angle)
-  -moz-transform: rotate($angle)
-  -o-transform: rotate($angle)
-  transform: rotate($angle)
+@mixin border-left-radius($r: 3px)
+  @include border-radius-base($r 0 0 $r)
+
+@mixin border-right-radius($r: 3px)
+  @include border-radius-base(0 $r $r 0)
+
+@mixin border-top-radius($r: 3px)
+  @include border-radius-base($r $r 0 0)
+
+@mixin border-bottom-radius($r: 3px)
+  @include border-radius-base(0 0 $r $r)
+
+@mixin border-radius($r: 3px)
+  @include border-radius-base($r)
 
 @mixin transition($property, $duration)
   -webkit-transition: $property $duration
   -moz-transition: $property $duration
   -o-transition: $property $duration
   transition: $property $duration
-
-@mixin button
-  @include border-radius(0px)
-  padding: .2em .5em
-  color: #fff
-  background: #888
-  cursor: pointer
-  &:hover
-    background: #999
-  &:active
-    background: #777
-
-@mixin blue-button
-  @include button
-  background-color: $blue
-  &:hover
-    background-color: $blue * 1.1
-  &:active
-    background-color: $blue * .8
 
 @mixin underline-box
   position: relative
@@ -151,17 +117,20 @@ $placeholderText: $grayLight
   opacity: $opacity
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $opacity * 100 + ")"
 
+@mixin box-shadow($shadows...)
+  -webkit-box-shadow: $shadows
+  -moz-box-shadow:    $shadows
+  -o-box-shadow:      $shadows
+  box-shadow:         $shadows
+
 @mixin drop-shadow($dist: 3px, $blur: 7px, $color: rgba(0, 0, 0, .4))
-  -webkit-box-shadow: 0px $dist $blur $color
-  -moz-box-shadow:    0px $dist $blur $color
-  -o-box-shadow:      0px $dist $blur $color
-  box-shadow:         0px $dist $blur $color
+  @include box-shadow(0px $dist $blur $color)
+
+@mixin top-bottom-shadow($size: 1px, $color: rgba(0, 0, 0, .15))
+  @include box-shadow(0 $size 0 $color, 0 -1 * $size 0 $color)
 
 @mixin inner-shadow($dist: 3px, $blur: 7px, $color: rgba(0, 0, 0, .4))
-  -webkit-box-shadow: inset 0px $dist $blur $color
-  -moz-box-shadow:    inset 0px $dist $blur $color
-  -o-box-shadow:      inset 0px $dist $blur $color
-  box-shadow:         inset 0px $dist $blur $color
+  @include box-shadow(inset 0px $dist $blur $color)
 
 @mixin background-size($type)
   background-size: $type
@@ -169,6 +138,13 @@ $placeholderText: $grayLight
   -moz-background-size: $type
   -ms-behavior: url(/static/resources/backgroundsize.min.htc)
 
+@mixin transform($transformation)
+  -webkit-transform: $transformation
+  -moz-transform: $transformation
+  transform: $transformation
 
+@mixin rotate($angle)
+  @include transform(rotate($angle))
 
-
+@mixin antialiased
+  -webkit-font-smoothing: antialiased
