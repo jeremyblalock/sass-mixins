@@ -1,22 +1,6 @@
 $grayLight: #ccc
 $placeholderText: $grayLight
 
-@mixin keyframes($animation-name)
-  @-webkit-keyframes #{ $animation-name }
-    from
-      -webkit-transform: rotate(0deg)
-    to
-      -webkit-transform: rotate(360deg)
-
-  // @-moz-keyframes #{ $animation-name }
-  //   @content
-
-  // @keyframes #{ $animation-name }
-  //   @content
-
-@include keyframes(spin)
-
-
 @mixin placeholder($color: $placeholderText)
   &:-moz-placeholder
     color: $color
@@ -49,16 +33,20 @@ $placeholderText: $grayLight
   border-radius: $r
 
 @mixin border-left-radius($r: 3px)
-  @include border-radius-base($r 0 0 $r)
+  border-bottom-left-radius: $r
+  border-top-left-radius: $r
 
 @mixin border-right-radius($r: 3px)
-  @include border-radius-base(0 $r $r 0)
+  border-bottom-right-radius: $r
+  border-top-right-radius: $r
 
 @mixin border-top-radius($r: 3px)
-  @include border-radius-base($r $r 0 0)
+  border-top-left-radius: $r
+  border-top-right-radius: $r
 
 @mixin border-bottom-radius($r: 3px)
-  @include border-radius-base(0 0 $r $r)
+  border-bottom-left-radius: $r
+  border-bottom-right-radius: $r
 
 @mixin border-radius($r: 3px)
   @include border-radius-base($r)
@@ -148,3 +136,38 @@ $placeholderText: $grayLight
 
 @mixin antialiased
   -webkit-font-smoothing: antialiased
+
+@mixin round-outline($width, $color)
+  @include box-shadow(0 0 0 $width $color)
+
+@mixin top-pointer($foreground, $background, $size, $offset)
+  position: relative
+  &:before, &:after
+    content: ''
+    display: block
+    position: absolute
+    left: 50%
+    border: solid transparent
+    border-top: none
+    bottom: 100%
+  &:before
+    border-width: $size + $offset
+    margin-left: -1 * ($size + $offset)
+    border-bottom-color: $background
+  &:after
+    border-width: $size
+    margin-left: -1 * $size
+    border-bottom-color: $foreground
+
+@mixin inside-bottom-border($width, $color, $type: solid)
+  position: relative
+  &:after
+    display: block
+    content: ''
+    border-bottom: $width $type $color
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 4
+
